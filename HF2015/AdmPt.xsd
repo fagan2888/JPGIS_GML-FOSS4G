@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema targetNamespace="http://fgd.gsi.go.jp/spec/2008/FGD_GMLSchema"
+	xmlns:fgd="http://fgd.gsi.go.jp/spec/2008/FGD_GMLSchema" 
+	xmlns:gml="http://www.opengis.net/gml/3.2" 
+	xmlns:xlink="http://www.w3.org/1999/xlink"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://fgd.gsi.go.jp/spec/2008/FGD_GMLSchema"
+	elementFormDefault="qualified"
+	attributeFormDefault="unqualified" >
+
+	<xs:annotation>
+		<xs:documentation>
+			このファイルは国土地理院の基盤地図情報 ダウンロードデータ用 XML Schema定義ファイルをGDAL(OGR)のGMLドライバで読み込めるように変更したものです。
+			このファイルには行政区画代表点のスキーマ定義が含まれます。
+
+			2015年8月
+
+			以下は原文
+
+			基盤地図情報 ダウンロードデータ用 XML Schema (XML Schema for Down Loaded Fundamental Geospatial Data)
+			
+			      (GML版) V4.0
+			
+			2008年3月 (March 2008)
+			2014年7月改定 (Revised on July 2014)
+			国土交通省国土地理院 (Geospatial Information Authority of Japan, Ministry of Land, Infrastructure, Transport and Tourism)
+		</xs:documentation>
+	</xs:annotation>
+
+	<xs:import namespace="http://www.opengis.net/gml/3.2"
+		 schemaLocation="http://standards.iso.org/ittf/PubliclyAvailableStandards/ISO_19136_Schemas/gml.xsd"/>
+
+	<!--==== ルート要素定義 ====-->
+	<xs:element name="Dataset" type="DatasetType" substitutionGroup="gml:AbstractGML"/>
+	<xs:complexType name="DatasetType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractGMLType">
+				<xs:sequence >
+					<xs:element ref="gml:AbstractGML" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<!--==== 各種地物クラスの定義 ====-->
+
+	<!--==== 行政区画代表点 ====-->
+	<xs:element name="|AdmPt" type="fgd:AdmPtType" substitutionGroup="gml:AbstractFeature"/>
+	<xs:complexType name="AdmPtType">
+		<xs:complexContent>
+			<xs:extension base="gml:AbstractFeatureType">
+				<xs:sequence>
+					<xs:element name="fid" type="xs:string"/>										<!-- 基盤地図情報レコードID -->
+					<xs:element name="lfSpanFr" type="xs:string"/>						<!-- 整備データ登録日 -->
+					<xs:element name="lfSpanTo" type="xs:string" minOccurs="0"/>			<!-- 整備データ削除日 -->
+					<xs:element name="devDate" type="xs:string" minOccurs="0"/>			<!-- 整備完了日 -->
+					<xs:element name="orgGILvl" type="xs:string" minOccurs="0"/>					<!-- 出典地図情報レベル -->
+					<xs:element name="orgMDId" type="xs:string" minOccurs="0"/>						<!-- 出典メタデータ -->
+					<xs:element name="vis" type="xs:string" minOccurs="0" default="表示"/>			<!-- 表示区分 -->
+
+					<xs:element name="pos" type="gml:PointPropertyType"/>	<!-- 地点 -->
+					<xs:element name="type" type="xs:string"/>				<!-- 種別 -->
+					<xs:element name="name" type="xs:string"/>				<!-- 名称 -->
+					<xs:element name="admCode" type="xs:string"/>			<!-- 行政コード -->
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+</xs:schema>
