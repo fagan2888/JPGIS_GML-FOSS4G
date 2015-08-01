@@ -201,8 +201,8 @@ def splitFGDGMLschema(xsdPath, outputDir, outputType='xsd'):
       featureType.exportToXsd(os.path.join(outputDir, 'jpfgdgml_{0}.xsd'.format(element.get('name'))))
 
     f.write("""        <featureType elementName="{0}"
-                     gfsSchemaLocation="jpfgdgml_{0}.{1}" />
-""".format(element.get('name'), 'gfs' if outputType == 'gfs' else 'xsd'))
+                     {1}="jpfgdgml_{0}.{2}" />
+""".format(element.get('name'), 'gfsSchemaLocation' if outputType == 'gfs' else 'schemaLocation', 'gfs' if outputType == 'gfs' else 'xsd'))
 
   f.close()
   return
