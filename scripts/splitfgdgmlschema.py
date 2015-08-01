@@ -172,6 +172,8 @@ def splitFGDGMLschema(xsdPath, outputDir, outputType='xsd'):
 
   featureTypes= {'gml:AbstractFeatureType': FeatureType('gml:AbstractFeatureType')}
 
+  f = open(os.path.join(outputDir, 'forregistry.xml'), 'w')
+
   for element in root.findall('./xs:element', namespaces=prefixMap):
     print element.get('name'), element.get('type')
 
@@ -198,6 +200,11 @@ def splitFGDGMLschema(xsdPath, outputDir, outputType='xsd'):
     else:
       featureType.exportToXsd(os.path.join(outputDir, 'jpfgdgml_{0}.xsd'.format(element.get('name'))))
 
+    f.write("""        <featureType elementName="{0}"
+                     gfsSchemaLocation="jpfgdgml_{0}.{1}" />
+""".format(element.get('name'), 'gfs' if outputType == 'gfs' else 'xsd'))
+
+  f.close()
   return
 
 def xsdHeader():
