@@ -21,6 +21,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+import sys
+reload(sys)
+sys.setdefaultencoding("utf-8")
+
 import os
 from xml.dom import minidom
 from xml.etree import ElementTree
@@ -87,6 +91,10 @@ class FeatureType:
     elem.appendChild(doc.createTextNode(elemName))
     parent.appendChild(elem)
 
+    elem = doc.createElement('SRSName')
+    elem.appendChild(doc.createTextNode('urn:ogc:def:crs:EPSG::4612'))
+    parent.appendChild(elem)
+
     geomName = geomType = '[TODO] UNKNOWN'
     geom = self.geometryProperty()
     if geom:
@@ -108,7 +116,7 @@ class FeatureType:
       if property.isGeometry():
         continue
 
-      gfsType = property.toGfsType()
+      gfsType = property.gfsType()
       if not gfsType:
         continue
 
@@ -120,7 +128,7 @@ class FeatureType:
       pd.appendChild(prop)
 
       prop = doc.createElement('ElementPath')
-      prop.appendChild(doc.createTextNode(property.name))
+      prop.appendChild(doc.createTextNode(property.gfsElementPath()))
       pd.appendChild(prop)
 
       prop = doc.createElement('Type')
@@ -151,7 +159,7 @@ class FeatureProperty:
 
     return {'gml:TimeInstantType': 'xs:string'}.get(self.type, self.type)
 
-  def toGfsType(self):
+  def gfsType(self):
     if self.type.startswith('fgd:ref_'):    # reference
       return None
 
@@ -162,6 +170,11 @@ class FeatureProperty:
             'xs:double': 'Real',
             'xs:string': 'String',
             'gml:TimeInstantType': 'String'}.get(self.type, '[TODO] ' + self.type)
+
+  def gfsElementPath(self):
+    if self.type == 'gml:TimeInstantType':
+      return self.name + '|' + 'timePosition'
+    return self.name
 
   def __repr__(self):
     return '"{0}": {1}'.format(self.name, self.type)
