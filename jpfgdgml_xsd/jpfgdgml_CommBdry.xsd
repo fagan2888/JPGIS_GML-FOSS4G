@@ -36,12 +36,20 @@
 		</xs:complexContent>
 	</xs:complexType>
 
-	<xs:element name="Dataset" type="fgd:DatasetType" substitutionGroup="gml:AbstractFeature"/>
-	<xs:complexType name="DatasetType">
+	<xs:element name="CommBdry" type="fgd:CommBdryType" substitutionGroup="gml:AbstractFeature"/>
+	<xs:complexType name="CommBdryType">
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureType">
 				<xs:sequence>
-					<xs:element name="None" type="None"/>
+					<xs:element name="fid" type="xs:string"/>
+					<xs:element name="lfSpanFr" type="xs:string"/>
+					<xs:element name="lfSpanTo" type="xs:string"/>
+					<xs:element name="devDate" type="xs:string"/>
+					<xs:element name="orgGILvl" type="xs:string"/>
+					<xs:element name="orgMDId" type="xs:string"/>
+					<xs:element name="vis" type="xs:string"/>
+					<xs:element name="loc" type="gml:CurvePropertyType"/>
+					<xs:element name="type" type="xs:string"/>
 				</xs:sequence>
 			</xs:extension>
 		</xs:complexContent>
