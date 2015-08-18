@@ -193,11 +193,11 @@ def splitFGDGMLschema(xsdPath, outputDir, outputType='xsd'):
     typeName = element.get('type')
     subGroup = element.get('substitutionGroup')
     complexType = root.find('./xs:complexType[@name="{0}"]'.format(typeName.split(":")[-1]), namespaces=prefixMap)
-    if not complexType:
+    if complexType is None:
       continue
 
     extension = complexType.find('.//xs:extension', namespaces=prefixMap)
-    if not extension:
+    if extension is None:
       continue
 
     featureType = FeatureType(typeName.split(":")[-1], featureTypes.get(extension.get('base')))
