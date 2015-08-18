@@ -1,0 +1,14 @@
+<GMLFeatureClassList>
+  <GMLFeatureClass>
+    <Name>Dataset</Name>
+    <ElementPath>Dataset</ElementPath>
+    <SRSName>urn:ogc:def:crs:EPSG::4612</SRSName>
+    <GeometryElementPath>[TODO] UNKNOWN</GeometryElementPath>
+    <GeometryType>[TODO] UNKNOWN</GeometryType>
+    <PropertyDefn>
+      <Name>None</Name>
+      <ElementPath>None</ElementPath>
+      <Type>[TODO] None</Type>
+    </PropertyDefn>
+  </GMLFeatureClass>
+</GMLFeatureClassList>
