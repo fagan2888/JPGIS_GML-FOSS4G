@@ -31,10 +31,11 @@ from xml.etree import ElementTree
 
 prefixMap = {'xs': 'http://www.w3.org/2001/XMLSchema'}
 
-class FeatureType:
+class FeatureClass:
 
-  def __init__(self, name, parent=None):
+  def __init__(self, name, typeName, parent=None):
     self.name = name
+    self.typeName = typeName
     self.properties = []
     if parent:
       self.properties += parent.properties
@@ -49,7 +50,6 @@ class FeatureType:
     return None
 
   def exportToXsd(self, filename):
-    elemName = self.name.replace('Type', '')
 
     with open(filename, 'w') as f:
       f.write(xsdHeader())
@@ -59,7 +59,7 @@ class FeatureType:
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureType">
 				<xs:sequence>
-""".format(elemName))
+""".format(self.name))
 
       for property in self.properties:
         xsdType = property.toXsdType()
@@ -83,12 +83,11 @@ class FeatureType:
     root.appendChild(parent)
 
     elem = doc.createElement('Name')
-    elemName = self.name.replace('Type', '')
-    elem.appendChild(doc.createTextNode(elemName))
+    elem.appendChild(doc.createTextNode(self.name))
     parent.appendChild(elem)
 
     elem = doc.createElement('ElementPath')
-    elem.appendChild(doc.createTextNode(elemName))
+    elem.appendChild(doc.createTextNode(self.name))
     parent.appendChild(elem)
 
     elem = doc.createElement('SRSName')
@@ -183,7 +182,7 @@ def splitFGDGMLschema(xsdPath, outputDir, outputType='xsd'):
   tree = ElementTree.parse(xsdPath)
   root = tree.getroot()
 
-  featureTypes= {'gml:AbstractFeatureType': FeatureType('gml:AbstractFeatureType')}
+  featureClasses = {'gml:AbstractFeatureType': FeatureClass('', 'gml:AbstractFeatureType')}
 
   f = open(os.path.join(outputDir, 'forregistry.xml'), 'w')
 
@@ -201,21 +200,21 @@ def splitFGDGMLschema(xsdPath, outputDir, outputType='xsd'):
     if extension is None:
       continue
 
-    featureType = FeatureType(typeName.split(":")[-1], featureTypes.get(extension.get('base')))
+    featureClass = FeatureClass(elementName, typeName.split(":")[-1], featureClasses.get(extension.get('base')))
     for prop in complexType.findall('.//xs:element', namespaces=prefixMap):
-      featureType.addProperty(FeatureProperty(prop.get('name'), prop.get('type')))
+      featureClass.addProperty(FeatureProperty(prop.get('name'), prop.get('type')))
 
-    featureTypes[typeName] = featureType
+    featureClasses[typeName] = featureClass
 
-    featureType.print_()
+    featureClass.print_()
 
     if elementName in ['Dataset', 'DEM', 'DGHM', 'FGDFeature']:    # exclusion
       continue
 
     if outputType == 'gfs':
-      featureType.exportToGfs(os.path.join(outputDir, 'jpfgdgml_{0}.gfs'.format(elementName)))
+      featureClass.exportToGfs(os.path.join(outputDir, 'jpfgdgml_{0}.gfs'.format(elementName)))
     else:
-      featureType.exportToXsd(os.path.join(outputDir, 'jpfgdgml_{0}.xsd'.format(elementName)))
+      featureClass.exportToXsd(os.path.join(outputDir, 'jpfgdgml_{0}.xsd'.format(elementName)))
 
     f.write("""        <featureType elementName="{0}"
                      {1}="jpfgdgml_{0}.{2}" />
