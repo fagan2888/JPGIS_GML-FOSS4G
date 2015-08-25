@@ -92,7 +92,7 @@ class FeatureType:
     parent.appendChild(elem)
 
     elem = doc.createElement('SRSName')
-    elem.appendChild(doc.createTextNode('urn:ogc:def:crs:EPSG::4612'))
+    elem.appendChild(doc.createTextNode('urn:ogc:def:crs:EPSG::6668'))    # JGD2011 BL
     parent.appendChild(elem)
 
     geomName = geomType = '[TODO] UNKNOWN'
@@ -268,4 +268,4 @@ def xsdFooter():
 if __name__ == '__main__':
   import sys
   outputType = 'gfs' if '-gfs' in sys.argv else 'xsd'
-  splitFGDGMLschema('FGD_GMLSchema.xsd', 'output', outputType)
+  splitFGDGMLschema('/Documents/dev/JPGIS(GML)-FOSS4G/FGD_GMLSchemaV4.0/FGD_GMLSchema.xsd', '/Documents/dev/JPGIS(GML)-FOSS4G/schema_output', outputType)
