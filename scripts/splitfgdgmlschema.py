@@ -188,9 +188,10 @@ def splitFGDGMLschema(xsdPath, outputDir, outputType='xsd'):
   f = open(os.path.join(outputDir, 'forregistry.xml'), 'w')
 
   for element in root.findall('./xs:element', namespaces=prefixMap):
-    print element.get('name'), element.get('type')
-
+    elementName = element.get('name')
     typeName = element.get('type')
+    print elementName, typeName
+
     subGroup = element.get('substitutionGroup')
     complexType = root.find('./xs:complexType[@name="{0}"]'.format(typeName.split(":")[-1]), namespaces=prefixMap)
     if complexType is None:
@@ -207,15 +208,18 @@ def splitFGDGMLschema(xsdPath, outputDir, outputType='xsd'):
     featureTypes[typeName] = featureType
 
     featureType.print_()
-    
+
+    if elementName in ['Dataset', 'DEM', 'DGHM', 'FGDFeature']:    # exclusion
+      continue
+
     if outputType == 'gfs':
-      featureType.exportToGfs(os.path.join(outputDir, 'jpfgdgml_{0}.gfs'.format(element.get('name'))))
+      featureType.exportToGfs(os.path.join(outputDir, 'jpfgdgml_{0}.gfs'.format(elementName)))
     else:
-      featureType.exportToXsd(os.path.join(outputDir, 'jpfgdgml_{0}.xsd'.format(element.get('name'))))
+      featureType.exportToXsd(os.path.join(outputDir, 'jpfgdgml_{0}.xsd'.format(elementName)))
 
     f.write("""        <featureType elementName="{0}"
                      {1}="jpfgdgml_{0}.{2}" />
-""".format(element.get('name'), 'gfsSchemaLocation' if outputType == 'gfs' else 'schemaLocation', 'gfs' if outputType == 'gfs' else 'xsd'))
+""".format(elementName, 'gfsSchemaLocation' if outputType == 'gfs' else 'schemaLocation', 'gfs' if outputType == 'gfs' else 'xsd'))
 
   f.close()
   return
