@@ -2,7 +2,7 @@
   <GMLFeatureClass>
     <Name>RdSgmtA</Name>
     <ElementPath>RdSgmtA</ElementPath>
-    <SRSName>urn:ogc:def:crs:EPSG::4612</SRSName>
+    <SRSName>urn:ogc:def:crs:EPSG::6668</SRSName>
     <GeometryElementPath>area</GeometryElementPath>
     <GeometryType>Polygon</GeometryType>
     <PropertyDefn>

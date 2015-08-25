@@ -36,8 +36,8 @@
 		</xs:complexContent>
 	</xs:complexType>
 
-	<xs:element name="河川区域界線" type="fgd:河川区域界線Type" substitutionGroup="gml:AbstractFeature"/>
-	<xs:complexType name="河川区域界線Type">
+	<xs:element name="RvrMgtBdry" type="fgd:RvrMgtBdryType" substitutionGroup="gml:AbstractFeature"/>
+	<xs:complexType name="RvrMgtBdryType">
 		<xs:complexContent>
 			<xs:extension base="gml:AbstractFeatureType">
 				<xs:sequence>

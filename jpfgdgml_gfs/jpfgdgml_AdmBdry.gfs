@@ -2,7 +2,7 @@
   <GMLFeatureClass>
     <Name>AdmBdry</Name>
     <ElementPath>AdmBdry</ElementPath>
-    <SRSName>urn:ogc:def:crs:EPSG::4612</SRSName>
+    <SRSName>urn:ogc:def:crs:EPSG::6668</SRSName>
     <GeometryElementPath>loc</GeometryElementPath>
     <GeometryType>LineString</GeometryType>
     <PropertyDefn>

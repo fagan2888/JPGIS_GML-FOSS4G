@@ -1,8 +1,8 @@
 <GMLFeatureClassList>
   <GMLFeatureClass>
-    <Name>河川区域界線</Name>
-    <ElementPath>河川区域界線</ElementPath>
-    <SRSName>urn:ogc:def:crs:EPSG::4612</SRSName>
+    <Name>RvrMgtBdry</Name>
+    <ElementPath>RvrMgtBdry</ElementPath>
+    <SRSName>urn:ogc:def:crs:EPSG::6668</SRSName>
     <GeometryElementPath>loc</GeometryElementPath>
     <GeometryType>LineString</GeometryType>
     <PropertyDefn>

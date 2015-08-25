@@ -2,7 +2,7 @@
   <GMLFeatureClass>
     <Name>AdmPt</Name>
     <ElementPath>AdmPt</ElementPath>
-    <SRSName>urn:ogc:def:crs:EPSG::4612</SRSName>
+    <SRSName>urn:ogc:def:crs:EPSG::6668</SRSName>
     <GeometryElementPath>pos</GeometryElementPath>
     <GeometryType>Point</GeometryType>
     <PropertyDefn>
